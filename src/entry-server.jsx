@@ -51,3 +51,4 @@ export function render(url) {
 // Re-exported so scripts/prerender.mjs only has to load one SSR bundle.
 export { allRoutes } from './seo/pageMeta';
 export { REVIEWS_SNAPSHOT } from './data/reviews';
+export { graphForRoute } from './seo/routeGraph';

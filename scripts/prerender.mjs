@@ -21,7 +21,7 @@ const SITE_URL = (process.env.VITE_SITE_URL || 'https://ashapets.in').replace(/\
 const OG_IMAGE =
   'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=1200&q=70';
 
-const { render, allRoutes, REVIEWS_SNAPSHOT } = await import(
+const { render, allRoutes, REVIEWS_SNAPSHOT, graphForRoute } = await import(
   join(root, 'dist-ssr/entry-server.js')
 );
 
@@ -88,6 +88,19 @@ for (const route of routes) {
   try {
     const appHtml = unhideAnimatedElements(await render(route.path));
     let page = buildHead(template, route);
+
+    // Full per-page schema in the static HTML. Seo.jsx injects the same
+    // graph client-side on SPA navigation; this makes it available to
+    // crawlers that never run the JavaScript.
+    const pageGraph = graphForRoute(route.path);
+    if (pageGraph) {
+      page = page.replace(
+        '</head>',
+        `  <script type="application/ld+json" data-seo-jsonld="page">${JSON.stringify(
+          pageGraph
+        ).replace(/</g, '\\u003c')}</script>\n  </head>`
+      );
+    }
     page = page.replace(
       '<div id="root"></div>',
       `<div id="root">${appHtml}</div>`
