@@ -205,6 +205,18 @@ needed, and adding one would only duplicate the build.
 `/api/google-reviews`. `dist/404.html` is served with a real 404 status for
 unmatched URLs.
 
+### Deploying before the domain is mapped
+
+Set `VITE_SITE_URL` to the Vercel URL Vercel assigns you, e.g.
+`https://asha-pets.vercel.app`. Everything stays self-consistent, and the build
+detects the `*.vercel.app` host and emits a `Disallow: /` robots.txt so Google
+cannot index the site under a temporary domain — which would otherwise create a
+duplicate you'd have to migrate away from later.
+
+Nothing to undo: point `VITE_SITE_URL` at the real domain and redeploy, and
+robots.txt, canonicals, the sitemap and the structured data all switch over
+together.
+
 ### Custom domain
 
 Vercel → Settings → **Domains** → add the domain. Vercel then shows the exact DNS

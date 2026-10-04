@@ -14,6 +14,15 @@ const outDir = join(root, 'dist');
 const SITE_URL = (process.env.VITE_SITE_URL || 'https://ashapets.in').replace(/\/$/, '');
 const today = new Date().toISOString().slice(0, 10);
 
+/*
+ * A *.vercel.app origin means the real domain is not mapped yet.
+ * Letting Google index that temporary URL creates a duplicate of the
+ * whole site that you then have to migrate away from, so robots.txt
+ * blocks crawling until VITE_SITE_URL points at the live domain.
+ * Nothing to remember later — changing the env var flips this back.
+ */
+const isTemporaryHost = /\.vercel\.app$/i.test(new URL(SITE_URL).hostname);
+
 /** Pull the city slugs straight out of the data file (no bundler needed). */
 function readCitySlugs() {
   const src = readFileSync(join(root, 'src/data/areas.js'), 'utf8');
@@ -56,7 +65,17 @@ ${routes
 </urlset>
 `;
 
-const robots = `# robots.txt for Asha Pets
+const robots = isTemporaryHost
+  ? `# robots.txt for Asha Pets — TEMPORARY DEPLOYMENT
+#
+# This build targets ${SITE_URL}, a temporary Vercel URL, so crawling is
+# blocked to avoid indexing a duplicate of the site under the wrong domain.
+# Set VITE_SITE_URL to the real domain and redeploy to allow indexing.
+
+User-agent: *
+Disallow: /
+`
+  : `# robots.txt for Asha Pets
 User-agent: *
 Allow: /
 
@@ -71,3 +90,10 @@ writeFileSync(join(outDir, 'robots.txt'), robots, 'utf8');
 
 console.log(`[seo] sitemap.xml written with ${routes.length} URLs`);
 console.log(`[seo] robots.txt written (host: ${SITE_URL})`);
+if (isTemporaryHost) {
+  console.warn(
+    '[seo] NOTE: temporary *.vercel.app host detected — robots.txt blocks all\n' +
+      '      crawling. Set VITE_SITE_URL to your real domain and redeploy to\n' +
+      '      allow indexing.'
+  );
+}
