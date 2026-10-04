@@ -1,0 +1,225 @@
+/* ============================================================
+   Hero section
+   ============================================================ */
+.hero {
+  position: relative;
+  padding-top: calc(var(--nav-h) + clamp(2rem, 6vw, 4rem));
+  padding-bottom: clamp(5rem, 10vw, 8rem);
+  background: var(--grad-cream);
+  overflow: hidden;
+}
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background: var(--grad-hero);
+  z-index: 0;
+}
+.hero__blob-1 {
+  width: 420px;
+  height: 420px;
+  background: rgba(230, 207, 154, 0.55);
+  top: -120px;
+  left: -100px;
+}
+.hero__blob-2 {
+  width: 360px;
+  height: 360px;
+  background: rgba(169, 126, 93, 0.35);
+  top: 20%;
+  right: -120px;
+}
+.hero__blob-3 {
+  width: 300px;
+  height: 300px;
+  background: rgba(200, 162, 74, 0.3);
+  bottom: -80px;
+  left: 30%;
+}
+
+.paw-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.paw-bg__paw {
+  position: absolute;
+  color: var(--brown);
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+}
+
+.hero__chip {
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--brown-dark);
+}
+.hero__chip svg {
+  color: var(--gold);
+}
+.hero h1 {
+  margin: 1.1rem 0;
+}
+.hero__tagline {
+  font-size: clamp(1rem, 2vw, 1.18rem);
+  max-width: 540px;
+  color: var(--text-muted);
+}
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin: 1.8rem 0 1.5rem;
+}
+.hero__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.4rem;
+}
+.hero__badges li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--brown-dark);
+}
+.hero__badges svg {
+  color: var(--gold-deep);
+  font-size: 0.85rem;
+}
+
+/* Visual side */
+.hero__visual {
+  position: relative;
+}
+.hero__img-wrap {
+  position: relative;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  aspect-ratio: 4 / 4.4;
+  border: 6px solid #fff;
+  rotate: 1.5deg;
+}
+.hero__img-wrap .lazy-img,
+.hero__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__float {
+  position: absolute;
+  border-radius: var(--r);
+  padding: 0.9rem 1.1rem;
+  box-shadow: var(--shadow);
+}
+.hero__float--rating {
+  top: 6%;
+  left: -6%;
+  text-align: center;
+}
+.hero__rating-stars {
+  color: var(--gold);
+  font-size: 0.8rem;
+  display: flex;
+  gap: 2px;
+  justify-content: center;
+}
+.hero__float--rating strong {
+  display: block;
+  font-family: var(--font-head);
+  font-size: 1.5rem;
+  color: var(--brown-dark);
+  line-height: 1.1;
+}
+.hero__float--rating span {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+.hero__float--pets {
+  bottom: 8%;
+  right: -6%;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.hero__float-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--grad-warm);
+  color: #fff;
+  font-size: 1.1rem;
+}
+.hero__float--pets strong {
+  display: block;
+  font-family: var(--font-head);
+  font-size: 1.25rem;
+  color: var(--brown-dark);
+  line-height: 1.1;
+}
+.hero__float--pets span {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.hero__wave {
+  position: absolute;
+  inset: auto 0 -1px 0;
+  z-index: 1;
+  line-height: 0;
+}
+.hero__wave svg {
+  width: 100%;
+  height: clamp(50px, 8vw, 90px);
+  display: block;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 900px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero__tagline {
+    margin-inline: auto;
+  }
+  .hero__cta,
+  .hero__badges {
+    justify-content: center;
+  }
+  .hero__visual {
+    max-width: 440px;
+    /* No `order: -1`: on phones the H1 and CTAs must come first,
+       both for conversion and because the H1 should lead the DOM. */
+    margin: 2rem auto 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero__float--rating {
+    left: 2%;
+    padding: 0.6rem 0.8rem;
+  }
+  .hero__float--pets {
+    right: 2%;
+    padding: 0.6rem 0.8rem;
+  }
+  .hero__float--rating strong {
+    font-size: 1.2rem;
+  }
+  .hero__cta .btn {
+    flex: 1 1 100%;
+  }
+}

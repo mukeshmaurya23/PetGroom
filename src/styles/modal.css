@@ -1,0 +1,222 @@
+/* ============================================================
+   Booking modal, forms, loader, lazy image
+   ============================================================ */
+
+/* ---------------- Lazy image ---------------- */
+.lazy-img {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(110deg, var(--beige) 30%, var(--sand) 50%, var(--beige) 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite linear;
+  overflow: hidden;
+}
+.lazy-img.is-loaded {
+  animation: none;
+  background: none;
+}
+.lazy-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: scale(1.04);
+}
+.lazy-img.is-loaded img {
+  opacity: 1;
+  transform: scale(1);
+}
+.lazy-img__fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 2.4rem;
+  background: var(--grad-cream);
+  color: var(--brown-light);
+}
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ---------------- Loader (boot screen) ---------------- */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 1.2rem;
+  background: var(--grad-cream);
+}
+.loader__paws {
+  display: flex;
+  gap: 0.6rem;
+  font-size: 1.8rem;
+  color: var(--brown);
+}
+.loader__paws span:nth-child(2) {
+  color: var(--gold-deep);
+}
+.loader__text {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--brown-dark);
+  letter-spacing: 0.02em;
+}
+
+/* ---------------- Modal ---------------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  background: rgba(53, 39, 28, 0.55);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
+  padding: 1.2rem;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.modal {
+  position: relative;
+  width: min(560px, 100%);
+  background: var(--cream);
+  border-radius: var(--r-lg);
+  padding: clamp(1.6rem, 4vw, 2.4rem);
+  box-shadow: var(--shadow-lg);
+  max-height: 92vh;
+  overflow-y: auto;
+  /* Still scrollable, just without the chunky global scrollbar cutting
+     through the dialog's rounded edge. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior: contain;
+}
+.modal::-webkit-scrollbar,
+.modal-overlay::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+.modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--beige);
+  color: var(--brown-dark);
+  font-size: 1.1rem;
+  transition: background 0.25s ease;
+}
+.modal__close:hover {
+  background: var(--sand);
+}
+.modal__head {
+  text-align: center;
+  margin-bottom: 1.4rem;
+}
+.modal__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: var(--grad-warm);
+  color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 0.8rem;
+}
+.modal__head h3 {
+  font-size: 1.5rem;
+}
+.modal__head p {
+  font-size: 0.92rem;
+  margin-top: 0.3rem;
+}
+
+/* ---------------- Booking form ---------------- */
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.booking-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+.booking-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--brown-dark);
+}
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  padding: 0.75rem 0.9rem;
+  width: 100%;
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--grey);
+  background: #fff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--text);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(200, 162, 74, 0.15);
+}
+.booking-form textarea {
+  resize: vertical;
+}
+/* Custom chevron so the arrow can sit inset from the edge — the native
+   control pins its own arrow hard against the border. */
+.booking-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 2.6rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%238a5a3b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.95rem center;
+  background-size: 15px 15px;
+  cursor: pointer;
+}
+.booking-form .btn {
+  margin-top: 0.4rem;
+}
+.booking-form__note {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
+
+@media (max-width: 480px) {
+  .booking-form__row {
+    grid-template-columns: 1fr;
+  }
+}

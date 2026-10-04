@@ -1,0 +1,82 @@
+# ============================================================
+# Build validation.
+#
+# This does NOT deploy — Vercel's Git integration already deploys
+# every push to main and gives every PR a preview URL. Running a
+# second deploy from here would only duplicate work.
+#
+# What this does is fail loudly if lint breaks or the build stops
+# producing the pages it should, so a bad commit is caught before
+# Vercel publishes it.
+# ============================================================
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        # No Google credentials here on purpose: sync:reviews exits 0
+        # and keeps the committed snapshot, so CI never depends on a
+        # third-party API being up.
+        run: npm run build
+
+      - name: Verify the build output
+        run: |
+          set -e
+          fail=0
+
+          # Every route must have been prerendered.
+          for page in index about services service-areas gallery contact \
+                      pet-grooming-in-mumbai pet-grooming-in-navi-mumbai \
+                      pet-grooming-in-thane pet-grooming-in-pune \
+                      pet-grooming-in-bangalore pet-grooming-in-delhi-ncr \
+                      pet-grooming-in-ahmedabad pet-grooming-in-surat \
+                      pet-grooming-in-goa; do
+            if [ "$page" = "index" ]; then file="dist/index.html"; else file="dist/$page/index.html"; fi
+            if [ ! -f "$file" ]; then
+              echo "::error::Missing prerendered page: $file"; fail=1; continue
+            fi
+            # A page with no <h1> means the app rendered an empty shell.
+            # -a: prerendered HTML is one very long line, which makes some
+            # greps treat the file as binary and skip it.
+            if ! grep -aq '<h1' "$file"; then
+              echo "::error::No <h1> in $file — the route rendered empty"; fail=1
+            fi
+            # Framer Motion's hidden state must never reach the static HTML.
+            if grep -aq 'opacity:0' "$file"; then
+              echo "::error::Hidden (opacity:0) content in $file"; fail=1
+            fi
+          done
+
+          for f in dist/sitemap.xml dist/robots.txt dist/404.html; do
+            [ -f "$f" ] || { echo "::error::Missing $f"; fail=1; }
+          done
+
+          exit $fail
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "### Build verified :white_check_mark:" >> $GITHUB_STEP_SUMMARY
+          echo "- $(ls -d dist/*/ 2>/dev/null | wc -l) prerendered directories" >> $GITHUB_STEP_SUMMARY
+          echo "- $(grep -ac '<url>' dist/sitemap.xml) URLs in sitemap.xml" >> $GITHUB_STEP_SUMMARY

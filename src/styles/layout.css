@@ -1,0 +1,453 @@
+/* ============================================================
+   Layout: Navbar, Drawer, Footer, floating buttons
+   ============================================================ */
+
+/* ---------------- Navbar ---------------- */
+.navbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  transition: background 0.35s ease, box-shadow 0.35s ease, backdrop-filter 0.35s ease;
+}
+.navbar.is-scrolled {
+  background: rgba(253, 246, 236, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 6px 30px rgba(99, 64, 42, 0.08);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: var(--nav-h);
+}
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.navbar__logo {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--grad-warm);
+  color: #fff;
+  font-size: 1.15rem;
+  box-shadow: var(--shadow-sm);
+}
+.navbar__name {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--brown-dark);
+  letter-spacing: -0.02em;
+}
+.navbar__name span {
+  color: var(--gold-deep);
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.navbar__link {
+  white-space: nowrap;
+  position: relative;
+  padding: 0.5rem 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+  border-radius: var(--r-pill);
+  transition: color 0.25s ease;
+}
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 0;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--grad-gold);
+  transform: translateX(-50%);
+  transition: width 0.28s ease;
+}
+.navbar__link:hover {
+  color: var(--brown);
+}
+.navbar__link:hover::after,
+.navbar__link.is-active::after {
+  width: 22px;
+}
+.navbar__link.is-active {
+  color: var(--brown-dark);
+  font-weight: 600;
+}
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.navbar__call {
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--brown-dark);
+}
+.navbar__call svg {
+  color: var(--gold-deep);
+}
+.navbar__call:hover {
+  color: var(--brown);
+}
+
+.navbar__burger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  place-items: center;
+  font-size: 1.25rem;
+  color: var(--brown-dark);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* ---------------- Mobile drawer ---------------- */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(53, 39, 28, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 120;
+}
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(86vw, 340px);
+  background: var(--cream);
+  z-index: 130;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -20px 0 60px rgba(99, 64, 42, 0.22);
+}
+.drawer__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--grey);
+}
+.drawer__close {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  color: var(--brown-dark);
+  background: var(--beige);
+}
+.drawer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 1.4rem;
+  flex: 1;
+}
+.drawer__link {
+  display: block;
+  padding: 0.9rem 1rem;
+  border-radius: var(--r);
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--text);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.drawer__link:hover,
+.drawer__link.is-active {
+  background: var(--beige);
+  color: var(--brown-dark);
+}
+.drawer__foot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--grey);
+}
+
+/* ---------------- Floating WhatsApp ---------------- */
+.floating-wa {
+  position: fixed;
+  right: clamp(1rem, 3vw, 1.6rem);
+  bottom: clamp(1rem, 3vw, 1.6rem);
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.15rem;
+  border-radius: var(--r-pill);
+  background: linear-gradient(135deg, #57b26e, #3c8f52);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 12px 30px rgba(60, 143, 82, 0.4);
+}
+.floating-wa svg {
+  font-size: 1.5rem;
+  z-index: 1;
+}
+.floating-wa__label {
+  font-size: 0.92rem;
+  z-index: 1;
+}
+.floating-wa__pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r-pill);
+  background: #4b8a5f;
+  z-index: 0;
+  animation: wa-pulse 2.2s ease-out infinite;
+}
+@keyframes wa-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* ---------------- Scroll to top ---------------- */
+.scroll-top {
+  position: fixed;
+  left: clamp(1rem, 3vw, 1.6rem);
+  bottom: clamp(1rem, 3vw, 1.6rem);
+  z-index: 90;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--grad-warm);
+  color: #fff;
+  font-size: 1.05rem;
+  box-shadow: var(--shadow);
+}
+
+/* ---------------- Footer ---------------- */
+.footer {
+  position: relative;
+  background: linear-gradient(180deg, #3a2c20 0%, #2c2016 100%);
+  color: #e9ddce;
+  overflow: hidden;
+}
+.footer__glow {
+  position: absolute;
+  top: -120px;
+  right: -80px;
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle, rgba(200, 162, 74, 0.28), transparent 70%);
+  pointer-events: none;
+}
+.footer__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.7fr repeat(2, minmax(0, 1fr)) 1.4fr;
+  gap: clamp(1.6rem, 3vw, 2.4rem);
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+}
+.footer__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.footer__logo .navbar__name {
+  color: #fff;
+}
+.footer__logo .navbar__name span {
+  color: var(--gold-soft);
+}
+.footer__brand p {
+  color: #c9b9a6;
+  max-width: 320px;
+  font-size: 0.95rem;
+}
+.footer__social {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1.3rem;
+}
+.footer__social a {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e9ddce;
+  transition: background 0.25s ease, transform 0.25s ease, color 0.25s ease;
+}
+.footer__social a:hover {
+  background: var(--grad-gold);
+  color: var(--brown-dark);
+  transform: translateY(-3px);
+}
+.footer__col h4 {
+  color: #fff;
+  font-size: 1.05rem;
+  margin-bottom: 1.1rem;
+}
+.footer__col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.footer__col ul a,
+.footer__contact span {
+  color: #c9b9a6;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+.footer__col ul a:hover {
+  color: var(--gold-soft);
+}
+.footer__contact li {
+  display: flex;
+  gap: 0.7rem;
+  /* flex-start, not center: the address wraps to two lines and its icon
+     belongs beside the first one. */
+  align-items: flex-start;
+}
+.footer__contact svg {
+  color: var(--gold-soft);
+  flex-shrink: 0;
+  /* Centres the 1em glyph on the first 1.55em line box:
+     (1.55em - 1em) / 2 ≈ 0.27em. */
+  margin-top: 0.27em;
+}
+.footer__contact li a,
+.footer__contact li span {
+  line-height: 1.55;
+  display: block;
+}
+.footer__bar {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.footer__bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.2rem;
+  padding-block: 1.3rem;
+  font-size: 0.85rem;
+  color: #b6a692;
+}
+.footer__bar-inner > * {
+  margin: 0;
+}
+/* Two classes so this beats `.container { padding-inline }`, which the
+   bundler emits after this file. Keeps the credit clear of the
+   floating WhatsApp button. */
+.footer__bar .footer__bar-inner {
+  padding-right: clamp(1.1rem, 20vw, 14rem);
+}
+.footer__made {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.footer__made svg {
+  color: #e07a6a;
+}
+
+/* Route-change fallback (invisible spacer to avoid layout shift) */
+.route-fallback {
+  min-height: 60vh;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 980px) {
+  .navbar__links,
+  .navbar__call {
+    display: none;
+  }
+  .navbar__burger {
+    display: grid;
+  }
+  .footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+  /* Brand blurb spans the full width so the link columns pair up neatly. */
+  .footer__brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 620px) {
+  /* Icon-only header actions: the Book button and the burger become
+     matching 44px squircles so they read as a pair. */
+  .navbar__actions .btn span {
+    display: none;
+  }
+  .navbar__actions .btn {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 14px;
+    flex-shrink: 0;
+  }
+  .navbar__actions .btn svg {
+    font-size: 1.15rem;
+  }
+  .navbar__burger {
+    border-radius: 14px;
+    flex-shrink: 0;
+  }
+
+  /* Label hidden, so the FAB must be a true circle rather than a
+     squashed pill (which made the pulse ring render as a rounded box). */
+  .floating-wa__label {
+    display: none;
+  }
+  .floating-wa {
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    gap: 0;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .floating-wa__pulse {
+    border-radius: 50%;
+  }
+  .scroll-top {
+    width: 44px;
+    height: 44px;
+  }
+  .footer__grid {
+    grid-template-columns: 1fr;
+  }
+  .footer__bar-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+}

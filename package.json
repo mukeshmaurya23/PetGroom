@@ -1,0 +1,39 @@
+{
+  "name": "asha-pets-grooming",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Premium pet grooming website for Asha Pets, Mulund East, Mumbai.",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run sync:reviews && npm run build:client && npm run build:ssr && npm run prerender && npm run seo:files",
+    "build:client": "vite build",
+    "build:ssr": "vite build --ssr src/entry-server.jsx --outDir dist-ssr",
+    "prerender": "node scripts/prerender.mjs",
+    "seo:files": "node scripts/generate-seo-files.mjs",
+    "build:spa": "vite build && npm run seo:files",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "sync:reviews": "node scripts/sync-google-reviews.mjs"
+  },
+  "dependencies": {
+    "framer-motion": "^11.3.19",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.2.1",
+    "react-router-dom": "^6.26.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "vite": "^5.4.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,790 @@
+/* ============================================================
+   Asha Pets — Service areas, live reviews & new UI surfaces
+   Mobile-first: base rules target the smallest screen, and
+   min-width queries progressively enhance upward.
+   ============================================================ */
+
+/* ---------------- Skip link (a11y) ---------------- */
+.skip-link {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -120%);
+  z-index: 200;
+  background: var(--brown);
+  color: #fff;
+  padding: 0.7rem 1.3rem;
+  border-radius: 0 0 var(--r-sm) var(--r-sm);
+  font-weight: 600;
+  transition: transform 0.2s ease;
+}
+.skip-link:focus-visible {
+  transform: translate(-50%, 0);
+}
+
+/* ============================================================
+   Areas section — city tabs
+   ============================================================ */
+.areas__tabs {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.25rem 0 0.9rem;
+  margin-bottom: 1.5rem;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+.areas__tabs::-webkit-scrollbar {
+  height: 5px;
+}
+.areas__tabs::-webkit-scrollbar-thumb {
+  background: var(--sand);
+  border-radius: 999px;
+  border: 0;
+}
+
+.areas__tab {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.62rem 1.05rem;
+  border-radius: var(--r-pill);
+  background: var(--white);
+  border: 1.5px solid var(--grey);
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.88rem;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+.areas__tab svg {
+  font-size: 0.95em;
+  opacity: 0.75;
+}
+.areas__tab:hover {
+  border-color: var(--brown-light);
+  color: var(--brown-dark);
+}
+.areas__tab.is-active {
+  background: var(--grad-warm);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+.areas__tab.is-active svg {
+  opacity: 1;
+}
+.areas__tab.is-flagship:not(.is-active) {
+  border-color: var(--gold-soft);
+  color: var(--gold-deep);
+}
+
+/* ---------------- Active city panel ---------------- */
+.areas__panel {
+  border-radius: var(--r-lg);
+  padding: clamp(1.15rem, 4vw, 2.2rem);
+  box-shadow: var(--shadow);
+}
+
+.areas__panel-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+.areas__panel-head h3 {
+  margin: 0.6rem 0 0.5rem;
+  font-size: clamp(1.25rem, 4.2vw, 1.6rem);
+}
+.areas__panel-head p {
+  font-size: 0.96rem;
+  margin: 0;
+}
+.areas__panel-head .btn {
+  flex-shrink: 0;
+}
+
+.areas__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.34rem 0.85rem;
+  border-radius: var(--r-pill);
+  background: rgba(138, 90, 59, 0.12);
+  color: var(--brown-dark);
+  font-family: var(--font-accent);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.areas__badge.is-flagship {
+  background: var(--grad-gold);
+  color: var(--brown-dark);
+}
+
+/* ---------------- Locality chips ---------------- */
+.areas__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1.3rem;
+  padding: 0;
+}
+.areas__chips li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.44rem 0.8rem;
+  border-radius: var(--r-pill);
+  background: var(--cream);
+  border: 1px solid var(--grey);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.25;
+}
+.areas__chips li svg {
+  color: var(--brown-light);
+  font-size: 0.8em;
+  flex-shrink: 0;
+}
+.areas__chips--page li {
+  background: var(--white);
+  font-size: 0.85rem;
+  padding: 0.55rem 0.95rem;
+}
+
+.areas__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1.2rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--r-pill);
+  background: var(--white);
+  border: 1.5px dashed var(--gold-soft);
+  color: var(--gold-deep);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  text-align: left;
+  transition: background 0.22s ease, border-color 0.22s ease, color 0.22s ease;
+}
+.areas__toggle svg {
+  flex-shrink: 0;
+  font-size: 0.8em;
+}
+.areas__toggle:hover {
+  background: var(--grad-gold);
+  border-style: solid;
+  border-color: transparent;
+  color: var(--brown-dark);
+}
+
+.areas__note {
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.7;
+}
+.areas__note .btn--link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: inherit;
+}
+
+.areas__all {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.2rem;
+}
+.areas__all .btn {
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+}
+
+/* ============================================================
+   Service-areas hub — city cards
+   ============================================================ */
+.area-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.1rem;
+}
+
+.area-card {
+  background: var(--white);
+  border: 1px solid var(--grey);
+  border-radius: var(--r-lg);
+  padding: clamp(1.2rem, 4vw, 1.8rem);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  transition: box-shadow 0.28s ease, border-color 0.28s ease;
+}
+.area-card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--gold-soft);
+}
+.area-card.is-flagship {
+  border-color: var(--gold);
+  background: linear-gradient(180deg, #fffdf8 0%, var(--white) 60%);
+}
+.area-card h3 {
+  font-size: clamp(1.1rem, 3.6vw, 1.32rem);
+  margin: 0;
+}
+.area-card h3 a:hover {
+  color: var(--brown);
+}
+.area-card p {
+  font-size: 0.92rem;
+  margin: 0;
+}
+.area-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  align-self: flex-start;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--r-pill);
+  background: rgba(200, 162, 74, 0.16);
+  color: var(--gold-deep);
+  font-family: var(--font-accent);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.area-card__localities {
+  font-size: 0.84rem !important;
+  color: var(--text-soft) !important;
+  line-height: 1.6;
+  /* Absorbs the uneven copy length so every card's button lines up. */
+  flex: 1 1 auto;
+}
+.area-card__localities strong {
+  color: var(--brown-dark);
+}
+.area-card .btn {
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+/* ============================================================
+   City landing page hero
+   ============================================================ */
+.area-hero {
+  position: relative;
+  overflow: hidden;
+  padding-top: calc(var(--nav-h) + clamp(1.8rem, 6vw, 3.5rem));
+  padding-bottom: clamp(2.5rem, 7vw, 4.5rem);
+  background: var(--grad-cream);
+}
+.area-hero__inner {
+  position: relative;
+  z-index: 1;
+}
+.area-hero__content {
+  max-width: 780px;
+}
+.area-hero h1 {
+  font-size: clamp(1.95rem, 7vw, 3.4rem);
+  margin: 0.9rem 0 0;
+}
+.area-hero__blurb {
+  font-size: clamp(0.98rem, 2.6vw, 1.1rem);
+  margin-top: 1rem;
+  max-width: 62ch;
+}
+
+.area-hero__rating {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+  padding: 0.55rem 1rem;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: var(--shadow-sm);
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.area-hero__rating:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+.area-hero__rating > span:first-child {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--gold);
+}
+.area-hero__rating strong {
+  font-family: var(--font-head);
+  font-size: 1.15rem;
+  color: var(--brown-dark);
+}
+
+.area-hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.6rem;
+}
+.area-hero__cta .btn {
+  flex: 1 1 100%;
+}
+
+/* ---------------- Sibling city links ---------------- */
+.area-links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+.area-links__item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.95rem 1.15rem;
+  border-radius: var(--r);
+  background: var(--cream);
+  border: 1px solid var(--grey);
+  font-weight: 600;
+  color: var(--brown-dark);
+  font-size: 0.94rem;
+  transition: background 0.24s ease, transform 0.24s ease, box-shadow 0.24s ease;
+}
+.area-links__item span {
+  flex: 1;
+  min-width: 0;
+}
+.area-links__item svg:first-child {
+  color: var(--brown-light);
+  flex-shrink: 0;
+}
+.area-links__item svg:last-child {
+  color: var(--gold-deep);
+  flex-shrink: 0;
+  transition: transform 0.24s ease;
+}
+.area-links__item:hover {
+  background: var(--white);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+.area-links__item:hover svg:last-child {
+  transform: translateX(4px);
+}
+
+/* ---------------- Standalone breadcrumb ---------------- */
+.area-hero .breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  margin-bottom: 0.6rem;
+}
+.area-hero .breadcrumb a:hover {
+  color: var(--brown);
+  text-decoration: underline;
+}
+.area-hero .breadcrumb [aria-current='page'] {
+  color: var(--brown-dark);
+  font-weight: 600;
+}
+
+/* ============================================================
+   Live reviews additions
+   ============================================================ */
+.stars {
+  display: inline-flex;
+  gap: 3px;
+}
+
+/* The overall-score block stacks: number, then stars, then "out of 5".
+   areas.css loads after sections.css, so `.stars { inline-flex }` would
+   otherwise flatten all three onto one line. */
+.reviews__score strong {
+  display: block;
+}
+.reviews__score .stars.reviews__score-stars {
+  display: flex;
+  justify-content: center;
+}
+.stars .is-on {
+  color: var(--gold);
+}
+.stars .is-off {
+  color: var(--grey);
+}
+
+.reviews__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: 0.45rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--r-pill);
+  background: rgba(75, 138, 95, 0.16);
+  color: var(--green-dark);
+  font-style: normal;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.reviews__live::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: reviews-pulse 2s ease-in-out infinite;
+}
+@keyframes reviews-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+.reviews__overall-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  width: 100%;
+}
+.reviews__overall-actions .btn {
+  flex: 1 1 100%;
+}
+
+.reviews__prompt {
+  margin-top: 2.2rem;
+  padding: clamp(1.2rem, 4vw, 1.8rem);
+  border-radius: var(--r-lg);
+  background: var(--white);
+  border: 1px dashed var(--gold-soft);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+}
+.reviews__prompt p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.review-card__avatar--img {
+  object-fit: cover;
+  padding: 0;
+}
+
+/* ============================================================
+   Misc new surfaces
+   ============================================================ */
+
+/* Clickable stat card */
+.stat-card--link {
+  cursor: pointer;
+  position: relative;
+  transition: box-shadow 0.25s ease;
+}
+.stat-card--link:hover {
+  box-shadow: var(--shadow-lg);
+}
+.stat-card__hint {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--gold-deep);
+  letter-spacing: 0.02em;
+}
+
+/* Hero additions */
+.hero__locality {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin-top: 0.9rem;
+  font-size: 0.83rem;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+.hero__locality svg {
+  color: var(--brown-light);
+  flex-shrink: 0;
+  margin-top: 0.22rem;
+}
+.hero__float-cta {
+  display: block;
+  margin-top: 0.25rem;
+  font-style: normal;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--gold-deep);
+  letter-spacing: 0.02em;
+}
+a.hero__chip {
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+a.hero__chip:hover {
+  background: rgba(200, 162, 74, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Footer additions */
+.footer__rating {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  transition: opacity 0.2s ease;
+}
+.footer__rating:hover {
+  opacity: 0.85;
+}
+.footer__rating-stars {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--gold);
+}
+.footer__rating strong {
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+}
+
+.footer__credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  opacity: 0.72;
+}
+.footer__credit svg {
+  font-size: 0.85em;
+}
+.footer__credit a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(255, 255, 255, 0.35);
+}
+.footer__credit a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* Booking modal additions */
+.modal__quick {
+  margin-bottom: 1rem;
+}
+.modal__divider {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0 0 1.1rem;
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.modal__divider::before,
+.modal__divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--grey);
+}
+
+/* 404 quick links */
+.notfound__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1.2rem 0 1.8rem;
+  padding: 0;
+}
+.notfound__links a {
+  display: inline-block;
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--r-pill);
+  background: var(--cream);
+  border: 1px solid var(--grey);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--brown-dark);
+}
+.notfound__links a:hover {
+  background: var(--brown);
+  color: #fff;
+  border-color: var(--brown);
+}
+
+/* ============================================================
+   Progressive enhancement upward
+   ============================================================ */
+
+@media (min-width: 480px) {
+  .area-hero__cta .btn {
+    flex: 0 1 auto;
+  }
+  .reviews__overall-actions .btn {
+    flex: 0 1 auto;
+  }
+}
+
+@media (min-width: 640px) {
+  .area-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .area-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .reviews__prompt {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+  .reviews__prompt .btn {
+    flex-shrink: 0;
+  }
+}
+
+@media (min-width: 860px) {
+  /* Enough room to show every city at once — wrap instead of scrolling. */
+  .areas__tabs {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    justify-content: center;
+  }
+  .areas__panel-head {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .areas__panel-head > div {
+    flex: 1;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .area-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .area-links {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---------------- Footer: full-width area links ---------------- */
+.footer__areas {
+  position: relative;
+  padding-bottom: clamp(1.6rem, 4vw, 2.4rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: clamp(1.6rem, 4vw, 2.2rem);
+}
+.footer__areas h4 {
+  color: #fff;
+  font-size: 0.95rem;
+  margin-bottom: 0.9rem;
+}
+.footer__areas ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+}
+.footer__areas li a {
+  display: inline-block;
+  padding: 0.42rem 0.85rem;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #d9cbb8;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease;
+}
+.footer__areas li a:hover {
+  background: var(--grad-gold);
+  border-color: transparent;
+  color: var(--brown-dark);
+}
+
+/* ---------------- Footer bar on small screens ---------------- */
+@media (max-width: 620px) {
+  .footer__bar-inner {
+    flex-direction: column;
+    text-align: center;
+    padding-right: 0;
+    gap: 0.45rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .areas__tabs {
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   Touch targets
+   Pointer-coarse devices get comfortably tappable links, without
+   loosening the tighter spacing that looks right with a mouse.
+   ============================================================ */
+@media (max-width: 860px), (pointer: coarse) {
+  /* Nav-style link columns only. The contact list is excluded: its rows
+     are `<svg> + <a>` pairs, and stretching the anchor to 40px pushed the
+     text off-centre from its icon. */
+  .footer__col ul:not(.footer__contact) li a,
+  .notfound__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+  }
+  .footer__col ul li {
+    line-height: 1.3;
+  }
+  .footer__contact li {
+    padding-block: 0.3rem;
+  }
+  .footer__areas li a {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .footer__social a,
+  .contact__social a {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .areas__tab {
+    min-height: 42px;
+  }
+  .areas__toggle {
+    min-height: 44px;
+  }
+  .btn--sm {
+    min-height: 40px;
+  }
+}
